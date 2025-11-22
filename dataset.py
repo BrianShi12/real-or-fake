@@ -2,11 +2,13 @@ import pandas as pd
 from torch.utils.data import Dataset
 from PIL import Image
 import torch
+import os
 
 class RealFakeDataset(Dataset):
-    def __init__(self, dataframe, transform=None):
+    def __init__(self, dataframe, transform=None, root_dir='data/'):
         self.dataframe = dataframe
         self.transform = transform
+        self.root_dir = root_dir
 
 
     def __len__(self):
@@ -17,7 +19,7 @@ class RealFakeDataset(Dataset):
 
         row = self.dataframe.iloc[idx]
 
-        img_path = row['image_path'] # gets the image path from the dataframe
+        img_path = os.path.join(self.root_dir, row['file_name'])  # join root_dir
         img = Image.open(img_path).convert("RGB")
         
         label = torch.tensor(row["label"], dtype=torch.long)
