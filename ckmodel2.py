@@ -17,7 +17,13 @@ def get_transforms():
 def model():
     weights   = ResNet18_Weights.DEFAULT
     model  = resnet18(weights=weights)
+    
     model.fc = torch.nn.Linear(model.fc.in_features, 1)
+
+    print(model)
+    for name, module in model.named_modules():
+        if isinstance(module, torch.nn.Conv2d):
+            print(f"{name}: kernel_size={module.kernel_size}, stride={module.stride}")
     return model
 
 def prepare_data():
@@ -75,7 +81,7 @@ if __name__ == "__main__":
     optimizer =  torch.optim.Adam(net.parameters(), lr=1e-4)
 
     #training loop 
-    for epoch in range(5):
+    for epoch in range(1):
         net.train()
         batch_count = 0
         for images, labels in trainloader:
