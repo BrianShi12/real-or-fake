@@ -105,5 +105,5 @@ if __name__ == "__main__":
         print(f"Epoch {epoch +1} Accuracy: {accuracy*100:.2f}%")
 
     #finish testing 
-    torch.save(net.state_dict(), "real_fake_resnet18.pth")
+    torch.save(net.state_dict(), "real_fake_ck_model_2resnet18.pth")
     print("Done training")
